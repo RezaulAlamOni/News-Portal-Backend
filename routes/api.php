@@ -22,3 +22,5 @@ Route::post('login', [AuthController::class, 'login']);
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('user-details', [AuthController::class, 'getUser']);
 });
+
+Route::get('/get-articles',[\App\Http\Controllers\ArticleController::class,'index']);
