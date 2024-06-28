@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\NewsfeedCustomize;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class NewsfeedCustomizeController extends Controller
@@ -25,10 +26,18 @@ class NewsfeedCustomizeController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @throws \JsonException
      */
     public function store(Request $request)
     {
-        //
+        NewsfeedCustomize::query()->updateOrCreate(['user_id' => auth()->id()],
+            [
+                'category' => $request->category,
+                'author' => $request->author,
+                'source' => json_encode($request->sources, JSON_THROW_ON_ERROR)
+            ]);
+
+        return response()->json(['message' => 'Newsfeed customized successfully'], 200);
     }
 
     /**

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class NewsfeedCustomize extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['user_id', 'category', 'author', 'source'];
 }

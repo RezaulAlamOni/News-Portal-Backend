@@ -32,6 +32,8 @@ class AuthController extends Controller
 
         $token = $user->createToken('Personal Access Token')->accessToken;
 
+        $user = $user->with('customNewsfeed');
+
         return response()->json(compact('user','token'), 200);
     }
 
@@ -41,6 +43,7 @@ class AuthController extends Controller
         if (auth()->attempt($credentials)) {
             $user = Auth::user();
             $token = $user->createToken('Personal Access Token')->accessToken;
+            $user = User::query()->with('customNewsfeed')->find($user->id);
             return response()->json(compact('token','user'), 200);
         } else {
             return response()->json(['error' => 'Unauthorized'], 401);

@@ -45,4 +45,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function customNewsfeed()
+    {
+        return $this->hasOne(NewsfeedCustomize::class, 'user_id');
+    }
 }
