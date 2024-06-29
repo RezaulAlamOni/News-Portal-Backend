@@ -13,7 +13,7 @@ class NewsfeedCustomizeController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(NewsfeedCustomize::query()->where('user_id',auth()->id())->first());
     }
 
     /**
@@ -37,7 +37,7 @@ class NewsfeedCustomizeController extends Controller
                 'source' => json_encode($request->sources, JSON_THROW_ON_ERROR)
             ]);
 
-        return response()->json(['message' => 'Newsfeed customized successfully'], 200);
+        return response()->json(['user' =>User::with('customNewsfeed')->find(auth()->id()),'message' => 'Newsfeed customized successfully'], 200);
     }
 
     /**
